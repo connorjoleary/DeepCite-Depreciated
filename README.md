@@ -1,8 +1,8 @@
 # DeepCite
 Citing original sources automatically
 
-DeepCite is an algorithm which takes in artilces and returns not just the the citeations the article gives
-but also the citations which those articles give. This then produces a tree of citeations. The algorithm 
+DeepCite is an algorithm which takes in articles and returns not just the citations the article gives
+but also the citations which those articles give. This then produces a tree of citations. The algorithm 
 will also return the paragraph where the infomation originates.
 This allows the user to easily trace back otherwise difficult to find source and quickly figure out how reliable
 a piece of information actually is.
