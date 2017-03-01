@@ -3,6 +3,8 @@
 
 *.sln
 *.pyproj
+*.pyc
+
 
 # User-specific files
 *.suo
@@ -246,3 +248,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/WebCrawler/WebCrawler/__pycache__
