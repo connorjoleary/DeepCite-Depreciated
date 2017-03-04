@@ -1,4 +1,5 @@
 import urllib.request
+import re
 from html.parser import HTMLParser
 
 #The dictionary below contains all of the html tags and their associated data
@@ -17,9 +18,11 @@ class MyHTMLParser(HTMLParser):
 
     def handle_data(self, data):
         #check if there are tags and valid data to add
-        if data and tagList:
-            #add the current data to the current starttag
-            htmlPage[tagList[-1]] = data
+        try:
+            if re.search(r'\w+', data):
+                print(data)
+        except UnicodeEncodeError:
+            print("*************")
 
     def handle_comment(self, data):
         #similarly this adds comments to the dictionary
@@ -30,5 +33,3 @@ class MyHTMLParser(HTMLParser):
 parser = MyHTMLParser()
 with urllib.request.urlopen('https://academic.oup.com/nar/article/38/suppl_2/W214/1126704/The-GeneMANIA-prediction-server-biological-network#20150589') as f:
     parser.feed(f.read().decode('utf-8'))
-print(tagList)
-#print(article) currently can't print because of minor Unicode Error
