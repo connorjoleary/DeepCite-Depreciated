@@ -23,14 +23,14 @@ class MyHTMLParser(HTMLParser):
                 links[self.pageIndex] = a
 
     def handle_data(self, data):
-        #check if there are tags and valid data to add
+        #check if there are words in the data and there is an index
         if re.search(r'\w+', data) and self.pageIndex:
             htmlPage[self.pageIndex] = data
 
     def handle_comment(self, data):
-        #similarly this adds comments to the dictionary
-        if data and self.pageIndex:
-            htmlPage[self.pageIndex] = data
+        #comments are assumed useless
+        #however if the comments are not caught by the parser they are interpreted as data
+        pass
 
 parser = MyHTMLParser()
 with urllib.request.urlopen('https://academic.oup.com/nar/article/38/suppl_2/W214/1126704/The-GeneMANIA-prediction-server-biological-network#20150589') as f:
