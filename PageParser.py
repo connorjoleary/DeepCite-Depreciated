@@ -1,17 +1,15 @@
 import urllib.request
 import re
-from BagOfWords import *
+from BagOfWords import * 
 from html.parser import HTMLParser
 
 #The dictionary below contains all of the html tags and their associated data
 #in the following (key : pair) format. (pageIndex : data) 
 #Currently this dictionary does not contain the Attributes of the tags
-htmlPage = dict()
+htmlPage = {}
 
 #Ditionary containing (pageIndex : hyperlink)
-links = dict()
-
-bow = BagOfWords()
+links = {}
 
 class MyHTMLParser(HTMLParser):
 
@@ -28,8 +26,8 @@ class MyHTMLParser(HTMLParser):
     def handle_data(self, data):
         #check if there are words in the data and there is an index
         if re.search(r'\w+', data) and self.pageIndex:
-            bow.addSentence(data)
-            #htmlPage[self.pageIndex] = data
+            htmlPage[self.pageIndex] = trimSentence(data)
+            #print(trimSentence(data))
 
     def handle_comment(self, data):
         #comments are assumed useless
@@ -40,5 +38,4 @@ parser = MyHTMLParser()
 with urllib.request.urlopen('https://academic.oup.com/nar/article/38/suppl_2/W214/1126704/The-GeneMANIA-prediction-server-biological-network#20150589') as f:
     parser.feed(f.read().decode('utf-8'))
 
-for pair in bow.wordTable.items():
-    print(pair)
+    
