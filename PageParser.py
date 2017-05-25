@@ -1,7 +1,9 @@
 import urllib.request
 import re
-from BagOfWords import * 
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
 from html.parser import HTMLParser
+
 
 #The dictionary below contains all of the html tags and their associated data
 #in the following (key : pair) format. (pageIndex : data) 
@@ -10,6 +12,19 @@ htmlPage = {}
 
 #Ditionary containing (pageIndex : hyperlink)
 links = {}
+
+porter = PorterStemmer()
+
+stopWordList = stopwords.words('english')
+
+def trimSentence(text):
+    clean = []
+    sent = re.sub(r'[^\x00-\x7F]', '', text)
+    for w in re.split('\s', sent):
+        word = str(re.sub(r'\W+', '', w)).lower()
+        if word not in stopWordList:
+            clean.append(porter.stem(word))
+    return clean
 
 class MyHTMLParser(HTMLParser):
 
@@ -38,4 +53,5 @@ parser = MyHTMLParser()
 with urllib.request.urlopen('https://academic.oup.com/nar/article/38/suppl_2/W214/1126704/The-GeneMANIA-prediction-server-biological-network#20150589') as f:
     parser.feed(f.read().decode('utf-8'))
 
-    
+for i in htmlPage.keys():
+    print(htmlPage[i])     
