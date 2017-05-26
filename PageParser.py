@@ -20,7 +20,7 @@ stopWordList = stopwords.words('english')
 def trimSentence(text):
     clean = []
     sent = re.sub(r'[^\x00-\x7F]', '', text)
-    for w in re.split('\s', sent):
+    for w in re.split('\s', sent): # TODO: from nltk.tokenize import word_tokenize
         word = str(re.sub(r'\W+', '', w)).lower()
         if word not in stopWordList:
             clean.append(porter.stem(word))
