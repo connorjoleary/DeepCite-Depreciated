@@ -1,8 +1,6 @@
 import urllib.request
-import re
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
 from html.parser import HTMLParser
+from topics import *
 
 
 #The dictionary below contains all of the html tags and their associated data
@@ -13,18 +11,6 @@ htmlPage = {}
 #Ditionary containing (pageIndex : hyperlink)
 links = {}
 
-porter = PorterStemmer()
-
-stopWordList = stopwords.words('english')
-
-def trimSentence(text):
-    clean = []
-    sent = re.sub(r'[^\x00-\x7F]', '', text)
-    for w in re.split('\s', sent): # TODO: from nltk.tokenize import word_tokenize
-        word = str(re.sub(r'\W+', '', w)).lower()
-        if word not in stopWordList:
-            clean.append(porter.stem(word))
-    return clean
 
 class MyHTMLParser(HTMLParser):
 
@@ -35,8 +21,8 @@ class MyHTMLParser(HTMLParser):
         #increment the page index for every tag seen 
         self.pageIndex += 1
         for a in attrs:
-            if re.search(r'href', a[0]):
-                links[self.pageIndex] = a
+            if re.search(r'href', a[0]): # TODO: the numerical links are not href's
+                links[self.pageIndex] = a # TODO: link is associated with the text after, not before
 
     def handle_data(self, data):
         #check if there are words in the data and there is an index
@@ -53,5 +39,15 @@ parser = MyHTMLParser()
 with urllib.request.urlopen('https://academic.oup.com/nar/article/38/suppl_2/W214/1126704/The-GeneMANIA-prediction-server-biological-network#20150589') as f:
     parser.feed(f.read().decode('utf-8'))
 
+text = "The two non-adaptive methods are the most conservative options and work well on small gene lists"
+most=0.0
 for i in htmlPage.keys():
-    print(htmlPage[i])     
+    dist = cosign_dist(trimSentence(text),htmlPage[i])
+    if not dist==0.0:
+        # print(htmlPage[i])
+        # print(dist)
+        if dist > most:
+            most = dist
+            print(htmlPage[i])
+            print(dist)
+            print(links.get(i))
