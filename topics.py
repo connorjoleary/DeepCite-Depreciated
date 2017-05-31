@@ -27,10 +27,20 @@ def cosign_dist(text1,text2):
     else:
         return float(numerator) / denominator
 
-def find_closest(cite, page):
-    print("TODO")
+def find_closest(cite, page): # TODO: if nothing good is returned by going sentence by sentence then broaden the search
+    most=0.0
+    for i in parser.htmlPage.keys():
+        dist = cosign_dist(trimSentence(text),parser.htmlPage[i])
+        if not dist==0.0:
+            # print(htmlPage[i])
+            # print(dist)
+            if dist > most:
+                most = dist
+                print(parser.htmlPage[i])
+                print(dist)
+                print(parser.links.get(i))
 
-def trimSentence(text):
+def trimSentence(text): # TODO: Get synonyms with synset
     clean = []
     sent = re.sub(r'[^\x00-\x7F]', '', text)
     for w in re.split('\s', sent): # TODO: from nltk.tokenize import word_tokenize
