@@ -1,7 +1,6 @@
 from html.parser import HTMLParser
 from topics import *
 
-
 class MyHTMLParser(HTMLParser):
     #The dictionary below contains all of the html tags and their associated data
     #in the following (key : pair) format. (pageIndex : data) 

@@ -5,8 +5,13 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from collections import Counter
 
-porter = PorterStemmer()
 
+class node():
+    def __init__(self, text, site):
+        self.text = text
+        self.cite = site
+
+porter = PorterStemmer()
 stopWordList = stopwords.words('english')
 
 def get_vector(text):
@@ -27,8 +32,12 @@ def cosign_dist(text1,text2):
     else:
         return float(numerator) / denominator
 
+# returns the closest sections of text and their respective links, 
+# TODO: draw a social network map
 def find_closest(cite, page): # TODO: if nothing good is returned by going sentence by sentence then broaden the search
+
     most=0.0
+    most_i = -1
     for i in parser.htmlPage.keys():
         dist = cosign_dist(trimSentence(text),parser.htmlPage[i])
         if not dist==0.0:
@@ -36,15 +45,8 @@ def find_closest(cite, page): # TODO: if nothing good is returned by going sente
             # print(dist)
             if dist > most:
                 most = dist
+                most_i=i
                 print(parser.htmlPage[i])
                 print(dist)
                 print(parser.links.get(i))
-
-def trimSentence(text): # TODO: Get synonyms with synset
-    clean = []
-    sent = re.sub(r'[^\x00-\x7F]', '', text)
-    for w in re.split('\s', sent): # TODO: from nltk.tokenize import word_tokenize
-        word = str(re.sub(r'\W+', '', w)).lower()
-        if word not in stopWordList:
-            clean.append(porter.stem(word))
-    return clean
+    return node(parser.htmlPage[most_i], parser.links.get(most_i))
