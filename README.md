@@ -14,3 +14,9 @@ most relevant citations and trace back those.
 
 Our hope is that eventually we will be able to weight the returned citations by relevance and automatically
 create citations based on the information given in an article.
+
+###Requirements
+
+####Nltk
+* stop_words
+* punkt

@@ -1,27 +1,25 @@
-import PageParser as pp
+#import PageParser as pp
 from TextParser import *
-from topics import *
+from utils import *
+from visualize import visualize
 import urllib.request
 
+max_it = 5
 
-def be_all_end_all(text, site):
-    parser = pp.MyHTMLParser()
-    with urllib.request.urlopen(site) as f:
-        parser.feed(f.read().decode('utf-8'))
-
+def be_all_end_all(node, iteration):
+    iteration+=1
+    parser = Parser(node.site)
     page = get_info(parser)
-    children = find_closest(text, page)
+    children = find_closest(node.text, page)
     visualize(children)
     if(iteration<max_it):
         for child in children:
-            be_all_end_all(child)
+            be_all_end_all(child, iteration+1)
 
 if __name__ == '__main__':
-    parser = pp.MyHTMLParser()
-    with urllib.request.urlopen('https://academic.oup.com/nar/article/38/suppl_2/W214/1126704/The-GeneMANIA-prediction-server-biological-network#20150589') as f:
-        parser.feed(f.read().decode('utf-8'))
+    start_site='http://www.aauw.org/research/the-simple-truth-about-the-gender-pay-gap/'
+    start_text='As a result, women who complete college degree are less able to pay off their student loans promptly, leaving them paying more and for a longer time than men.'
+    #parser = pp.Parser(start_site)
 
-    text = "The two non-adaptive methods are the most conservative options and work well on small gene lists"
-    start_site=''
-    start_text=''
-    be_all_end_all(start_text,start_site)
+    iteration = 0
+    be_all_end_all(node(start_text, start_site), iteration)

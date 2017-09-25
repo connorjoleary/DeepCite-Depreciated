@@ -9,7 +9,7 @@ from collections import Counter
 class node():
     def __init__(self, text, site):
         self.text = text
-        self.cite = site
+        self.site = site
 
 porter = PorterStemmer()
 stopWordList = stopwords.words('english')
