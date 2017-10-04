@@ -6,7 +6,6 @@ import urllib.request
 from bs4 import BeautifulSoup
 
 # TODO: create class that includes both the text and the links as lists and put this into all following functions
-
 class Parser:
     def __init__(self, site):
         file = urllib.request.urlopen(site)
@@ -33,9 +32,9 @@ class Parser:
 
 def get_info(parser):
     sectioned = section_text(parser)
-    return clean(sectioned)
+    return node(clean(sectioned.text), sectioned.site)
 
-# split into sentences or paragraphs or places inbetween text
+# split into sentences or paragraphs or places inbetween text and retain which sections the links point to
 def section_text(parser):
     # get the position of each link when all text is combined
     text = ''
@@ -58,13 +57,4 @@ def section_text(parser):
 
         start_index=end_index
         
-    return node(sentences, links)
-
-def clean(text): # TODO: Get synonyms with synset
-    cleaned = []
-    sent = re.sub(r'[^\x00-\x7F]', '', text)
-    for w in text: # TODO: from nltk.tokenize import word_tokenize
-        word = str(re.sub(r'\W+', '', w)).lower()
-        if word not in stopWordList:
-            cleaned.append(porter.stem(word))
-    return cleaned
+    return node(sentences, new_links)

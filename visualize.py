@@ -1,2 +1,5 @@
 def visualize(nodes):
-    print('todo')
+    for node in nodes:
+        print(node.site)
+        print(node.text)
+        print()
