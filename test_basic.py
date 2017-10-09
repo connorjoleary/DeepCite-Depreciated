@@ -1,9 +1,8 @@
 # import PageParser as pp
-from TextParser import *
-from utils import *
-from Compair import *
-from visualize import visualize
-import urllib.request
+from deepcite.text_parser import *
+
+from deepcite.compare import *
+from deepcite.visualize import visualize
 
 max_it = 5
 start_text = ''
