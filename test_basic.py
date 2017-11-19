@@ -5,8 +5,6 @@ from deepcite.compare import *
 from deepcite.visualize import visualize
 
 max_it = 5
-start_text = ''
-
 
 def be_all_end_all(node, iteration):
     parser = Parser(node.site)
@@ -23,12 +21,13 @@ def be_all_end_all(node, iteration):
         else:
             return children
 
-
-def test_simple():
-    start_site = 'http://www.aauw.org/research/' \
-                 'the-simple-truth-about-the-gender-pay-gap/'
-    start_text = 'As a result, women who complete college degree ' \
-                 'are less able to pay off their student loans promptly, ' \
-                 'leaving them paying more and for a longer time than men.'
+def test_simple(start_text, start_site):
     iteration = 0
-    be_all_end_all(node(start_text, start_site), iteration)
+    print(be_all_end_all(node(start_text, start_site), iteration))
+
+start_site = 'http://www.aauw.org/research/' \
+             'the-simple-truth-about-the-gender-pay-gap/'
+start_text = 'As a result, women who complete college degree ' \
+             'are less able to pay off their student loans promptly, ' \
+             'leaving them paying more and for a longer time than men.'
+test_simple(start_text, start_site)
