@@ -1,4 +1,5 @@
-from utils import *
+from .utils import *
+import spacy 
 
 # returns the closest sections of text and their respective links, 
 # TODO: draw a social network map
@@ -15,4 +16,6 @@ def find_closest(source, page, max_dist):
 
 #TODO: what if the source is multiple sentences
 def prepare_source(text):
-    return clean([text])[0]
+    nlp = spacy.load('en_core_web_sm')
+    return nlp(text)
+    # return clean([text])[0]

@@ -4,6 +4,7 @@ import numpy as np
 import nltk
 import urllib.request
 from bs4 import BeautifulSoup
+import spacy
 
 # TODO: create class that includes both the text and the links as lists and put this into all following functions
 class Parser:
@@ -44,17 +45,22 @@ def section_text(parser):
         if (parser.page_links.get(i)):
             links[len(text)-1] = parser.page_links[i]
 
-    sentences  = sent_tokenize(text)
-    new_links={}
-    start_index=0 # TODO: when sent_token runs it removes some values so finding the location by index does not automatically work
-    for i, sent in enumerate(sentences):
-        end_index=start_index+len(sent)+1
+    nlp = spacy.load('en_core_web_sm')
+    tokens = nlp(text)
+
+    # sentences = sent_tokenize(text)
+    new_links = {}
+    # TODO: when sent_token runs it removes some values so finding the location
+    # by index does not automatically work
+    start_index = 0
+    for i, sent in enumerate(tokens.sents):
+        end_index = start_index + sent.end + 1
         keys = list(links)
         for key in keys:
             if key<end_index and key>start_index:
                 new_links[i] = links[key]
                 del links[key]
 
-        start_index=end_index
-        
-    return node(sentences, new_links)
+        start_index = end_index
+
+    return node(tokens.sents, new_links)
