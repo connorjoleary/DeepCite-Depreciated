@@ -1,9 +1,10 @@
 #import PageParser as pp
-from TextParser import *
-from utils import *
-from Compair import *
-from visualize import visualize
 import urllib.request
+
+from .Compair import *
+from .TextParser import Parser, get_info
+from .Utils import *
+from .Visualize import visualize
 
 max_it = 5
 start_text=''

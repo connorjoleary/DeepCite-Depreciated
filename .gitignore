@@ -4,6 +4,7 @@
 *.sln
 *.pyproj
 *.pyc
+.pytest_cache
 
 # User-specific files
 *.suo

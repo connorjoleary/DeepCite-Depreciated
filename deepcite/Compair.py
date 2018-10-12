@@ -1,4 +1,4 @@
-from .utils import *
+from .Utils import *
 import spacy 
 
 # returns the closest sections of text and their respective links, 

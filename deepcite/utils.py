@@ -10,17 +10,17 @@ class node():
         self.site = site
 
 
-# def clean(text):
-#     cleaned = []  # TODO: if I overwrite the input it would save space
-#     for sent in text:
-#         cleaned_sent = []
-#         # sent = re.sub(r'[^\x00-\x7F]', ' ', sent)
-#         for word in sent:
-#             word = word.lower #str(re.sub(r'\W+', ' ', word.text)).lower()
-#             if word not in stopWordList:
-#                 cleaned_sent.append(porter.stem(word))
-#         cleaned.append(cleaned_sent)
-#     return cleaned
+def clean(text):
+    cleaned = []  # TODO: if I overwrite the input it would save space
+    for sent in text:
+        cleaned_sent = []
+        # sent = re.sub(r'[^\x00-\x7F]', ' ', sent)
+        for word in sent:
+            word = word.lower #str(re.sub(r'\W+', ' ', word.text)).lower()
+            if word not in stopWordList:
+                cleaned_sent.append(porter.stem(word))
+        cleaned.append(cleaned_sent)
+    return cleaned
 
 porter = PorterStemmer()
 stopWordList = stopwords.words('english') + [' ']

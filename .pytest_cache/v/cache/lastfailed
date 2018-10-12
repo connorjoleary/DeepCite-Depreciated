@@ -1,6 +1,4 @@
 {
   "deepcite/test/test_base.py": true,
-  "deepcite/test/test_base.py::test": true,
-  "deepcite/test/test_base.py::test_base": true,
-  "test/test_base.py": true
+  "test/test_base.py::test_base": true
 }
